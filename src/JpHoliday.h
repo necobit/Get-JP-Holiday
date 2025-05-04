@@ -9,6 +9,14 @@
 
 #include <Arduino.h>
 
+// Holiday structure to store date and name
+struct Holiday {
+  int year;
+  int month;
+  int day;
+  String name;
+};
+
 class JpHoliday {
 public:
   // Constructor
@@ -22,8 +30,8 @@ public:
   String getHolidayName(int year, int month, int day);
   
   // Get the list of holidays for the specified year
-  // This will be implemented in a future version
-  // void getHolidayList(int year, /* output parameters */);
+  // Returns the number of holidays found
+  int getHolidayList(int year, Holiday* holidays, int maxHolidays);
 
 private:
   // Check if the date is a fixed date holiday
