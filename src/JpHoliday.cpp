@@ -25,6 +25,51 @@ bool JpHoliday::isHoliday(int year, int month, int day) {
   return false;
 }
 
+int JpHoliday::getHolidayList(int year, Holiday* holidays, int maxHolidays) {
+  if (year < 2000 || year > 2030 || holidays == NULL || maxHolidays <= 0) {
+    return 0;
+  }
+  
+  int count = 0;
+  
+  for (int month = 1; month <= 12; month++) {
+    int daysInMonth;
+    
+    switch (month) {
+      case 2:
+        if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)) {
+          daysInMonth = 29;
+        } else {
+          daysInMonth = 28;
+        }
+        break;
+      case 4: case 6: case 9: case 11:
+        daysInMonth = 30;
+        break;
+      default:
+        daysInMonth = 31;
+        break;
+    }
+    
+    for (int day = 1; day <= daysInMonth; day++) {
+      if (isHoliday(year, month, day)) {
+        if (count >= maxHolidays) {
+          return count;
+        }
+        
+        holidays[count].year = year;
+        holidays[count].month = month;
+        holidays[count].day = day;
+        holidays[count].name = getHolidayName(year, month, day);
+        
+        count++;
+      }
+    }
+  }
+  
+  return count;
+}
+
 bool JpHoliday::isRegularHoliday(int year, int month, int day) {
   if (isFixedDateHoliday(year, month, day)) {
     return true;
