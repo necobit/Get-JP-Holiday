@@ -35,6 +35,9 @@ private:
   // Check if the date is an equinox holiday
   bool isEquinoxHoliday(int year, int month, int day);
   
+  // Check if the date is a substitute holiday
+  bool isSubstituteHoliday(int year, int month, int day);
+  
   // Calculate the day of the Vernal Equinox
   int calculateVernalEquinoxDay(int year);
   
@@ -49,6 +52,9 @@ private:
   
   // Get the day of the week (0=Sunday, 1=Monday, ..., 6=Saturday)
   int getDayOfWeek(int year, int month, int day);
+  
+  // Check if the specified date is a regular holiday (not including substitute holidays)
+  bool isRegularHoliday(int year, int month, int day);
 };
 
 #endif // JP_HOLIDAY_H
