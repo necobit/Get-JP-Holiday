@@ -30,7 +30,11 @@ jobs:
     - name: Install library
       run: |
         mkdir -p ~/Arduino/libraries/JpHoliday
-        cp -r ${{ github.workspace }}/* ~/Arduino/libraries/JpHoliday/
+        cp -r ${{ github.workspace }}/src ~/Arduino/libraries/JpHoliday/
+        cp -r ${{ github.workspace }}/examples ~/Arduino/libraries/JpHoliday/
+        cp -r ${{ github.workspace }}/test ~/Arduino/libraries/JpHoliday/
+        cp ${{ github.workspace }}/library.properties ~/Arduino/libraries/JpHoliday/
+        cp ${{ github.workspace }}/keywords.txt ~/Arduino/libraries/JpHoliday/
         
     - name: Compile examples for Arduino Uno
       run: |
