@@ -40,19 +40,16 @@ jobs:
       run: |
         arduino-cli compile --fqbn arduino:avr:uno ${{ github.workspace }}/examples/CheckHoliday
         arduino-cli compile --fqbn arduino:avr:uno ${{ github.workspace }}/examples/HolidayList
-        arduino-cli compile --fqbn arduino:avr:uno ${{ github.workspace }}/examples/MemoryTest
         arduino-cli compile --fqbn arduino:avr:uno ${{ github.workspace }}/test/JpHolidayTest
         
     - name: Compile examples for ESP8266
       run: |
         arduino-cli compile --fqbn esp8266:esp8266:generic ${{ github.workspace }}/examples/CheckHoliday
         arduino-cli compile --fqbn esp8266:esp8266:generic ${{ github.workspace }}/examples/HolidayList
-        arduino-cli compile --fqbn esp8266:esp8266:generic ${{ github.workspace }}/examples/MemoryTest
         arduino-cli compile --fqbn esp8266:esp8266:generic ${{ github.workspace }}/test/JpHolidayTest
         
     - name: Compile examples for ESP32
       run: |
         arduino-cli compile --fqbn esp32:esp32:esp32 ${{ github.workspace }}/examples/CheckHoliday
         arduino-cli compile --fqbn esp32:esp32:esp32 ${{ github.workspace }}/examples/HolidayList
-        arduino-cli compile --fqbn esp32:esp32:esp32 ${{ github.workspace }}/examples/MemoryTest
         arduino-cli compile --fqbn esp32:esp32:esp32 ${{ github.workspace }}/test/JpHolidayTest
