@@ -50,87 +50,106 @@ String JpHoliday::getHolidayName(int year, int month, int day) {
     return "振替休日";
   }
   
-  if (month == 1 && day == 1) {
-    return "元日";
+  switch (month) {
+    case 1:  // January
+      if (day == 1) {
+        return "元日";  // New Year's Day
+      }
+      if (isSecondMonday(year, month, day)) {
+        return "成人の日";  // Coming of Age Day
+      }
+      break;
+      
+    case 2:  // February
+      if (day == 11) {
+        return "建国記念の日";  // National Foundation Day
+      }
+      if (day == 23 && year >= 2020) {
+        return "天皇誕生日";  // Emperor's Birthday (from 2020)
+      }
+      break;
+      
+    case 3:  // March
+      if (day == calculateVernalEquinoxDay(year)) {
+        return "春分の日";  // Vernal Equinox Day
+      }
+      break;
+      
+    case 4:  // April
+      if (day == 29) {
+        return "昭和の日";  // Showa Day
+      }
+      break;
+      
+    case 5:  // May
+      if (day == 3) {
+        return "憲法記念日";  // Constitution Memorial Day
+      }
+      if (day == 4) {
+        return "みどりの日";  // Greenery Day
+      }
+      if (day == 5) {
+        return "こどもの日";  // Children's Day
+      }
+      break;
+      
+    case 7:  // July
+      if (year >= 2003) {
+        if (isThirdMonday(year, month, day)) {
+          return "海の日";  // Marine Day (third Monday from 2003)
+        }
+      } else if (day == 20) {
+        return "海の日";  // Marine Day (July 20 until 2002)
+      }
+      break;
+      
+    case 8:  // August
+      if (day == 11 && year >= 2016) {
+        return "山の日";  // Mountain Day (from 2016)
+      }
+      break;
+      
+    case 9:  // September
+      if (year >= 2003) {
+        if (isThirdMonday(year, month, day)) {
+          return "敬老の日";  // Respect for the Aged Day (third Monday from 2003)
+        }
+      } else if (day == 15) {
+        return "敬老の日";  // Respect for the Aged Day (September 15 until 2002)
+      }
+      
+      if (day == calculateAutumnalEquinoxDay(year)) {
+        return "秋分の日";  // Autumnal Equinox Day
+      }
+      break;
+      
+    case 10:  // October
+      if (isSecondMonday(year, month, day) && year >= 2000) {
+        if (year >= 2020) {
+          return "スポーツの日";  // Sports Day (from 2020)
+        } else {
+          return "体育の日";  // Health and Sports Day (until 2019)
+        }
+      }
+      break;
+      
+    case 11:  // November
+      if (day == 3) {
+        return "文化の日";  // Culture Day
+      }
+      if (day == 23) {
+        return "勤労感謝の日";  // Labor Thanksgiving Day
+      }
+      break;
+      
+    case 12:  // December
+      if (day == 23 && year < 2019) {
+        return "天皇誕生日";  // Emperor's Birthday (until 2018)
+      }
+      break;
   }
   
-  if (month == 2 && day == 11) {
-    return "建国記念の日";
-  }
-  
-  if (month == 2 && day == 23 && year >= 2020) {
-    return "天皇誕生日";
-  }
-  
-  if (month == 12 && day == 23 && year < 2019) {
-    return "天皇誕生日";
-  }
-  
-  if (month == 4 && day == 29) {
-    return "昭和の日";
-  }
-  
-  if (month == 5 && day == 3) {
-    return "憲法記念日";
-  }
-  
-  if (month == 5 && day == 4) {
-    return "みどりの日";
-  }
-  
-  if (month == 5 && day == 5) {
-    return "こどもの日";
-  }
-  
-  if (month == 8 && day == 11 && year >= 2016) {
-    return "山の日";
-  }
-  
-  if (month == 11 && day == 3) {
-    return "文化の日";
-  }
-  
-  if (month == 11 && day == 23) {
-    return "勤労感謝の日";
-  }
-  
-  if (month == 1 && isSecondMonday(year, month, day)) {
-    return "成人の日";
-  }
-  
-  if (month == 7) {
-    if (year >= 2003 && isThirdMonday(year, month, day)) {
-      return "海の日";
-    } else if (year < 2003 && day == 20) {
-      return "海の日";
-    }
-  }
-  
-  if (month == 9) {
-    if (year >= 2003 && isThirdMonday(year, month, day)) {
-      return "敬老の日";
-    } else if (year < 2003 && day == 15) {
-      return "敬老の日";
-    }
-  }
-  
-  if (month == 10 && isSecondMonday(year, month, day) && year >= 2000) {
-    if (year >= 2020) {
-      return "スポーツの日";
-    } else {
-      return "体育の日";
-    }
-  }
-  
-  if (month == 3 && day == calculateVernalEquinoxDay(year)) {
-    return "春分の日";
-  }
-  
-  if (month == 9 && day == calculateAutumnalEquinoxDay(year)) {
-    return "秋分の日";
-  }
-  
-  return "";
+  return "";  // Not a holiday
 }
 
 bool JpHoliday::isSubstituteHoliday(int year, int month, int day) {
