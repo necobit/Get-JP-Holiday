@@ -8,7 +8,13 @@
 #define JP_HOLIDAY_H
 
 #include <Arduino.h>
-#include <avr/pgmspace.h>
+
+// Cross-platform PROGMEM compatibility
+#if defined(ESP8266) || defined(ESP32)
+  #include <pgmspace.h>
+#else
+  #include <avr/pgmspace.h>
+#endif
 
 // Holiday name indices for memory optimization
 enum HolidayNameIndex {
