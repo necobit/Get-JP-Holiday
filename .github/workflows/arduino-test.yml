@@ -1,0 +1,50 @@
+name: Arduino Library Test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  arduino-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup Arduino CLI
+      uses: arduino/setup-arduino-cli@v1
+      
+    - name: Install Arduino CLI core and libraries
+      run: |
+        arduino-cli core update-index
+        arduino-cli core install arduino:avr
+        arduino-cli core install esp8266:esp8266
+        arduino-cli core install esp32:esp32
+        
+    - name: Install library
+      run: |
+        mkdir -p ~/Arduino/libraries/JpHoliday
+        cp -r ${{ github.workspace }}/* ~/Arduino/libraries/JpHoliday/
+        
+    - name: Compile examples for Arduino Uno
+      run: |
+        arduino-cli compile --fqbn arduino:avr:uno ${{ github.workspace }}/examples/CheckHoliday
+        arduino-cli compile --fqbn arduino:avr:uno ${{ github.workspace }}/examples/HolidayList
+        arduino-cli compile --fqbn arduino:avr:uno ${{ github.workspace }}/examples/MemoryTest
+        arduino-cli compile --fqbn arduino:avr:uno ${{ github.workspace }}/test/JpHolidayTest
+        
+    - name: Compile examples for ESP8266
+      run: |
+        arduino-cli compile --fqbn esp8266:esp8266:generic ${{ github.workspace }}/examples/CheckHoliday
+        arduino-cli compile --fqbn esp8266:esp8266:generic ${{ github.workspace }}/examples/HolidayList
+        arduino-cli compile --fqbn esp8266:esp8266:generic ${{ github.workspace }}/examples/MemoryTest
+        arduino-cli compile --fqbn esp8266:esp8266:generic ${{ github.workspace }}/test/JpHolidayTest
+        
+    - name: Compile examples for ESP32
+      run: |
+        arduino-cli compile --fqbn esp32:esp32:esp32 ${{ github.workspace }}/examples/CheckHoliday
+        arduino-cli compile --fqbn esp32:esp32:esp32 ${{ github.workspace }}/examples/HolidayList
+        arduino-cli compile --fqbn esp32:esp32:esp32 ${{ github.workspace }}/examples/MemoryTest
+        arduino-cli compile --fqbn esp32:esp32:esp32 ${{ github.workspace }}/test/JpHolidayTest
